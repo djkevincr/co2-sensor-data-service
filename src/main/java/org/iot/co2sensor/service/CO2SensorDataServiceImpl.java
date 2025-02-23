@@ -55,20 +55,28 @@ public class CO2SensorDataServiceImpl implements CO2SensorDataService {
       if (Objects.isNull(latestAlert)) {
         saveInitialAlert(uuid, co2, serverNowTime);
       } else {
-        if (co2 >= CO2SensorConstants.CO2_SENSOR_THRESHOLD) {
+        if (co2 > CO2SensorConstants.CO2_SENSOR_THRESHOLD) {
           if (latestAlert.getSensorStatus() == SensorStatus.ALERT) {
             // do nothing
           } else if (latestAlert.getSensorStatus() == SensorStatus.WARN) {
             List<Measurement> lastMeasurements = measurementRepository.findLastThreeMeasurements(uuid, latestAlert.getStartTime());
             boolean isLastThreeExceedsThreshold = lastMeasurements
                     .stream()
-                    .filter((input) -> input.getCo2() >= CO2SensorConstants.CO2_SENSOR_THRESHOLD)
+                    .filter((input) -> input.getCo2() > CO2SensorConstants.CO2_SENSOR_THRESHOLD)
                     .count() == 3;
             if (isLastThreeExceedsThreshold) {
               storeNewAlert(latestAlert, uuid, serverNowTime, SensorStatus.ALERT);
             } else {
               // do nothing
             }
+          } else {
+            storeNewAlert(latestAlert, uuid, serverNowTime, SensorStatus.WARN);
+          }
+        } else if (co2 == CO2SensorConstants.CO2_SENSOR_THRESHOLD) {
+          if (latestAlert.getSensorStatus() == SensorStatus.ALERT) {
+            // do nothing
+          } else if (latestAlert.getSensorStatus() == SensorStatus.WARN) {
+            // do nothing
           } else {
             storeNewAlert(latestAlert, uuid, serverNowTime, SensorStatus.WARN);
           }

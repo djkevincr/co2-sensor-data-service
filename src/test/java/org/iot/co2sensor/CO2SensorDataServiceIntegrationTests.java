@@ -89,21 +89,21 @@ class CO2SensorDataServiceIntegrationTests {
             .andExpect(jsonPath("$.status", is("OK")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(2000L)))
+            .content(createMeasurementRequest(3000L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$.status", is("WARN")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(2000L)))
+            .content(createMeasurementRequest(3000L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$.status", is("WARN")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(2000L)))
+            .content(createMeasurementRequest(4000L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
             .andExpect(status().is2xxSuccessful())
@@ -155,7 +155,7 @@ class CO2SensorDataServiceIntegrationTests {
     this.mockMvc.perform(get(getMetricsUrl))
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$.maxLast30Days", is(4000)))
-            .andExpect(jsonPath("$.avgLast30Days", is(1600)));
+            .andExpect(jsonPath("$.avgLast30Days", is(2000)));
   }
 
   @Test
@@ -165,7 +165,7 @@ class CO2SensorDataServiceIntegrationTests {
 
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(5000L)))
+            .content(createMeasurementRequest(3000L)))
             .andExpect(status().is2xxSuccessful());
     String getSensorStatusUrl = URL_TEMPLATE.replace("{uuid}", sensorId);
     this.mockMvc.perform(get(getSensorStatusUrl))
@@ -194,13 +194,27 @@ class CO2SensorDataServiceIntegrationTests {
             .andExpect(jsonPath("$.status", is("WARN")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(2000L)))
+            .content(createMeasurementRequest(3000L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$.status", is("WARN")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
+            .content(createMeasurementRequest(3000L)))
+            .andExpect(status().is2xxSuccessful());
+    this.mockMvc.perform(get(getSensorStatusUrl))
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(jsonPath("$.status", is("WARN")));
+    this.mockMvc.perform(post(createMeasurementUrl)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(createMeasurementRequest(3000L)))
+            .andExpect(status().is2xxSuccessful());
+    this.mockMvc.perform(get(getSensorStatusUrl))
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(jsonPath("$.status", is("ALERT")));
+    this.mockMvc.perform(post(createMeasurementUrl)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(createMeasurementRequest(2000L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
@@ -208,21 +222,14 @@ class CO2SensorDataServiceIntegrationTests {
             .andExpect(jsonPath("$.status", is("ALERT")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(1000L)))
+            .content(createMeasurementRequest(2000L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$.status", is("ALERT")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(4000L)))
-            .andExpect(status().is2xxSuccessful());
-    this.mockMvc.perform(get(getSensorStatusUrl))
-            .andExpect(status().is2xxSuccessful())
-            .andExpect(jsonPath("$.status", is("ALERT")));
-    this.mockMvc.perform(post(createMeasurementUrl)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(1000L)))
+            .content(createMeasurementRequest(3000L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
             .andExpect(status().is2xxSuccessful())
@@ -236,7 +243,14 @@ class CO2SensorDataServiceIntegrationTests {
             .andExpect(jsonPath("$.status", is("ALERT")));
     this.mockMvc.perform(post(createMeasurementUrl)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(createMeasurementRequest(1000L)))
+            .content(createMeasurementRequest(500L)))
+            .andExpect(status().is2xxSuccessful());
+    this.mockMvc.perform(get(getSensorStatusUrl))
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(jsonPath("$.status", is("ALERT")));
+    this.mockMvc.perform(post(createMeasurementUrl)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(createMeasurementRequest(500L)))
             .andExpect(status().is2xxSuccessful());
     this.mockMvc.perform(get(getSensorStatusUrl))
             .andExpect(status().is2xxSuccessful())
@@ -245,7 +259,7 @@ class CO2SensorDataServiceIntegrationTests {
     String getMetricsUrl = URL_TEMPLATE.replace("{uuid}", sensorId) + "/metrics";
     this.mockMvc.perform(get(getMetricsUrl))
             .andExpect(status().is2xxSuccessful())
-            .andExpect(jsonPath("$.maxLast30Days", is(5000)))
+            .andExpect(jsonPath("$.maxLast30Days", is(3000)))
             .andExpect(jsonPath("$.avgLast30Days", is(2000)));
   }
 
