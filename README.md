@@ -10,7 +10,7 @@ Kevin Ratnasekera
 
 Time received on the client requests are unreliable. Hence, server recorded times are stored in the Database.
 Once sensor status is turned to 'WARN', if the next measurement received is below the co2 threshold 2000, 
-then the sensor status is turned back to 'OK'.
+before 3 consecutive below co2 threshold 2000 then the sensor status is turned back to 'OK'.
 
 # Tech Stack Used
 
